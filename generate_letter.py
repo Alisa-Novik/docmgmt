@@ -1,14 +1,22 @@
-from langchain.chains import RetrievalQA
-from langchain.chat_models import ChatOpenAI
-from langchain.vectorstores import FAISS
+from langchain.chains import LLMChain
+from langchain_community.chat_models import ChatOpenAI
+from langchain_community.vectorstores import FAISS
+from langchain_community.embeddings import OpenAIEmbeddings
 from langchain.prompts import PromptTemplate
-from langchain.embeddings import OpenAIEmbeddings
-
+from dotenv import load_dotenv
+import os
 
 def main():
-    retriever = FAISS.load_local("faiss_index", OpenAIEmbeddings()).as_retriever()
+    retriever = FAISS.load_local(
+        "faiss_index",
+        OpenAIEmbeddings(),
+        allow_dangerous_deserialization=True
+    ).as_retriever()
 
-    llm = ChatOpenAI(model_name="gpt-4", temperature=0.3)
+    docs = retriever.get_relevant_documents("лидерская роль")
+    context = "\n\n".join(d.page_content for d in docs)
+
+    llm = ChatOpenAI(model_name="gpt-4.1-mini", temperature=0.3, openai_api_key=os.getenv("OPENAI_API_KEY"))
 
     prompt = PromptTemplate.from_template(
         """
@@ -20,21 +28,18 @@ def main():
 """
     )
 
-    chain = RetrievalQA.from_chain_type(
-        llm=llm,
-        retriever=retriever,
-        chain_type_kwargs={"prompt": prompt}
-    )
+    chain = LLMChain(llm=llm, prompt=prompt)
 
     response = chain.run({
         "criterion": "лидерская роль",
         "tone": "уверенный, но не пафосный",
         "style": "живой, технически грамотный",
-        "recommender": "Alex Blinov, Oracle Health"
+        "recommender": "Alex Blinov, Oracle Health",
+        "context": context
     })
 
     print(response)
 
-
 if __name__ == "__main__":
+    load_dotenv()
     main()
