@@ -1,4 +1,6 @@
 .env
 venv
 faiss_index
+docs
 knowledge_base
+letters
