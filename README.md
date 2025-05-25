@@ -9,6 +9,11 @@ This repository contains a minimal setup for generating draft recommendation let
 - `generate_letter.py` — generates a draft letter using the indexed documents and a language model.
 - `drafts/` — suggested folder for saving generated letters.
 
+The repository includes a few example documents inside `knowledge_base/` so
+the tools work out of the box. Feel free to replace or delete these files.
+If your own documents contain sensitive information, consider expanding
+`.gitignore` to exclude them from commits.
+
 ## Requirements
 
 Install dependencies:
