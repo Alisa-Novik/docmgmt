@@ -43,7 +43,7 @@ python build_index.py
 python generate_letter.py
 ```
 
-The script prints the draft to stdout. You can modify the parameters in `generate_letter.py` or extend the code to save outputs in `drafts/`.
+The script writes the generated letter to `letters/letter.txt`.
 
 ## License
 
