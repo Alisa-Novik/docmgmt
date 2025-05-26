@@ -14,7 +14,7 @@ This repository contains a minimal setup for generating draft recommendation let
 Install dependencies:
 
 ```bash
-pip install langchain openai faiss-cpu tiktoken python-docx
+pip install langchain langchain-openai langchain-community openai faiss-cpu tiktoken
 ```
 
 If you want to run without OpenAI, replace `OpenAIEmbeddings` with `sentence-transformers` and use a local model.
