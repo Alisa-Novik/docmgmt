@@ -30,7 +30,13 @@ cp .env.example .env
 
 ## Usage
 
-1. Populate `knowledge_base/` with your source documents.
+1. Populate `knowledge_base/` with your source documents. To convert `.docx`
+   and `.pdf` files into plain text under `knowledge_base/`, run:
+
+   ```bash
+   python pydoc.py path/to/documents
+   ```
+
 2. Run the indexer once:
 
 ```bash
